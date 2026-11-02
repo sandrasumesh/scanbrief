@@ -7,11 +7,15 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from scanbrief import ParseError, analyze, load_assets, load_folder  # noqa: E402
-from scanbrief.models import Asset  # noqa: E402
-from scanbrief.parsers import parse_nmap, parse_zap  # noqa: E402
-from scanbrief.report import (  # noqa: E402
-    ReportError, ai_report, grounding_errors, offline_report, to_markdown,
+from scanbrief import ParseError, analyze, load_assets, load_folder
+from scanbrief.models import Asset
+from scanbrief.parsers import parse_nmap, parse_zap
+from scanbrief.report import (
+    ReportError,
+    ai_report,
+    grounding_errors,
+    offline_report,
+    to_markdown,
 )
 
 SAMPLES = ROOT / "samples"
@@ -123,7 +127,7 @@ def high_ids(findings):
 def test_ai_report_accepts_grounded_output(sample):
     findings, _ = sample
     client = FakeClient([report_input(high_ids(findings))])
-    report, log = ai_report(findings, client=client)
+    _report, log = ai_report(findings, client=client)
     assert log == ["attempt 1: valid"]
     assert client.requests[0]["tool_choice"] == {"type": "tool", "name": "write_report"}
 
@@ -131,7 +135,7 @@ def test_ai_report_accepts_grounded_output(sample):
 def test_ai_report_retries_on_invented_ids(sample):
     findings, _ = sample
     client = FakeClient([report_input(["S-99"]), report_input(high_ids(findings))])
-    report, log = ai_report(findings, client=client)
+    _report, log = ai_report(findings, client=client)
     assert log[0].startswith("attempt 1: rejected")
     feedback = client.requests[1]["messages"][-1]["content"][0]["content"]
     assert "S-99" in feedback and "not covered" in feedback
