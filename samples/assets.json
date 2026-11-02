@@ -1,0 +1,7 @@
+{
+  "203.0.113.10": {"name": "Patient portal", "internet_facing": true, "handles_phi": true, "owner": "Portal vendor"},
+  "portal.riverbend-health.example": {"name": "Patient portal", "internet_facing": true, "handles_phi": true, "owner": "Portal vendor"},
+  "203.0.113.12": {"name": "Office file server", "internet_facing": true, "handles_phi": true, "owner": "IT contractor"},
+  "10.0.0.20": {"name": "Billing database", "internet_facing": false, "handles_phi": true, "owner": "IT contractor"},
+  "10.0.0.31": {"name": "Front desk PC", "internet_facing": false, "handles_phi": false, "owner": "IT contractor"}
+}
